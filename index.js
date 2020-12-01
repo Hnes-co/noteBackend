@@ -2,6 +2,11 @@ const { response } = require('express')
 const express = require('express')
 const cors = require('cors')
 const app = express()
+const Note = require('./models/note')
+
+
+
+
 
 app.use(express.json())
 
@@ -22,6 +27,7 @@ app.use(express.static('build'))
 app.use(cors())
 app.use(requestLogger)
 
+/*
 let notes = [  
     {    
         id: 1,    
@@ -42,6 +48,7 @@ let notes = [
         important: true  
     }
 ]
+*/
 /*
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
@@ -49,7 +56,9 @@ app.get('/', (req, res) => {
 */
 
 app.get('/api/notes', (request, response) => {
-    response.json(notes)
+    Note.find({}).then(notes => {
+        response.json(notes)
+    })
 })
 
 app.get('/api/notes/:id', (req, res) => {
